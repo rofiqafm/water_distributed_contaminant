@@ -116,8 +116,7 @@ def simulated_annealing(data, initial_temp, final_temp, alpha, max_iterations, n
             best_fitness = new_fitness
 
         temp *= alpha
-
-    return best_solution
+    return list(map(int, best_solution))
 
 
 
