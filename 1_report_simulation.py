@@ -2,16 +2,17 @@ from epyt import epanet
 import csv
 import os
 
-name_network="jilin"
+name_network="bwsn"
 # name_network="Jilin including water quality"
 # G = epanet('source_inp/net2-cl2.inp')
 # G.loadMSXFile('source_inp/net2-cl2.msx')
-G = epanet('source_inp/data_network/Jilin including water quality.inp')
+# G = epanet('source_inp/data_network/Jilin including water quality.inp')
 # G = epanet('source_inp/network/New York Tunnels including water quality.inp')
 # G = epanet(f'source_inp/data_network/FOS - unvertices.inp')
+G = epanet(f'source_inp/data_network/BWSN-clean.inp')
 # G = epanet('source_inp/Net3-NH2CL.inp')
 # G.loadMSXFile('source_inp/Net3-NH2CL.msx')
-
+G.setQualityType('chem', 'Chlorine', 'mg/L')
 simulationDuration = 86400    #Duration-> 172800 seconds = 2days | default => 086400 = 1 days
 G.setTimeSimulationDuration(simulationDuration)
 
@@ -20,10 +21,12 @@ G.setTimePatternStart(patternStart)
 patternStep = 1 # Pattern Timestep
 G.setTimePatternStep(patternStep)
 
-nodeIndex=28 #15
+# print(G.getNodeIndex())
+nodeIndex=129 #15
 sourceStrength=1.5 #besaran kontaminant yang akan di injeksi (yang merubah setingan default dari Network yang digunakan)
 sourceType = 'SETPOINT' #MASS,CONCEN,SETPOINT,FLOWPACED
 G.setNodeSourceType(nodeIndex, sourceType)
+# exit()
 s=[]
 for ikz,vkz in enumerate(G.getNodeIndex()):
     if vkz == nodeIndex:
@@ -45,7 +48,6 @@ G.setNodeSourceQuality(G.getNodeIndex(),s)
 # # G.setOptionsQualityTolerance(QualityTolerance)
 # # EmiterExponent=0.5
 # # G.setOptionsEmitterExponent(EmiterExponent)
-exit()
 statisticsType = 'NONE'
 G.setTimeStatisticsType(statisticsType)
 directory="source_inp/output_simulation/report_simulation"
@@ -65,6 +67,7 @@ G.setReport('LINKS ALL')
 G.setReport('SUMMARY NO')
 # # # # Run
 P=G.runsCompleteSimulation()
+# exit()
 #----------------------------------------------------------------------------------
 # G.setReport('STATUS YES')
 
@@ -90,7 +93,6 @@ P=G.runsCompleteSimulation()
 
 # #-------------------------------------------------------------------
 filenameNode=f'{directory}/{name_network}_node.csv'
-exit()
 line_to_delete = 11
 initial_line = 1
 file_lines = {}

@@ -1,0 +1,54 @@
+Network : Jilin
+================
+Jumlah Sensor : 2
+----------------------------
+Greedy Algorithm: Positions=[28, 26], Fitness=122, Coverage=7.14%, Precision=1.0, Recall=0.07407407407407407, Time=0.03 seconds
+PSO Algorithm: Positions=[26, 28], Fitness=122, Coverage=7.14%, Precision=1.0, Recall=0.07407407407407407, Time=1.00 seconds
+SA Algorithm: Positions=[26, 28], Fitness=122, Coverage=7.14%, Precision=1.0, Recall=0.07407407407407407, Time=0.07 seconds
+Genetic Algorithm: Positions=[5, 7], Fitness=766, Coverage=57.14%, Precision=1.0, Recall=0.5925925925925926, Time=2.88 seconds
+Neural Network Algorithm: Positions=[20, 17], Fitness=493, Coverage=35.71%, Precision=1.0, Recall=0.37037037037037035, Time=1.17 seconds
+Decision Tree Algorithm: Positions=[13, 26], Fitness=182, Coverage=10.71%, Precision=1.0, Recall=0.1111111111111111, Time=1.12 seconds
+Random Forest Algorithm: Positions=[6, 26], Fitness=182, Coverage=10.71%, Precision=1.0, Recall=0.1111111111111111, Time=2.25 seconds
+ACO Algorithm: Positions=[4, 26], Fitness=182, Coverage=10.71%, Precision=1.0, Recall=0.1111111111111111, Time=2.49 seconds
+K-means Clustering Algorithm: Positions=[20, 7], Fitness=708, Coverage=53.57%, Precision=1.0, Recall=0.5555555555555556, Time=0.00 seconds
+CGMO Algorithm: Positions=[26, 28], Fitness=122, Coverage=7.14%, Precision=1.0, Recall=0.07407407407407407, Time=0.01 seconds
+============================
+Jumlah Sensor : 3
+----------------------------
+Greedy Algorithm: Positions=[28, 26, 4], Fitness=183, Coverage=10.71%, Precision=1.0, Recall=0.1111111111111111, Time=0.03 seconds
+PSO Algorithm: Positions=[6, 17, 28], Fitness=242, Coverage=14.29%, Precision=1.0, Recall=0.14814814814814814, Time=1.43 seconds
+SA Algorithm: Positions=[1, 4, 28], Fitness=290, Coverage=17.86%, Precision=0.8, Recall=0.14814814814814814, Time=0.09 seconds
+Genetic Algorithm: Positions=[8, 11, 3], Fitness=799, Coverage=57.14%, Precision=1.0, Recall=0.5925925925925926, Time=3.99 seconds
+Neural Network Algorithm: Positions=[3, 23, 21], Fitness=584, Coverage=39.29%, Precision=1.0, Recall=0.4074074074074074, Time=1.57 seconds
+Decision Tree Algorithm: Positions=[23, 26, 6], Fitness=243, Coverage=14.29%, Precision=1.0, Recall=0.14814814814814814, Time=1.70 seconds
+Random Forest Algorithm: Positions=[12, 26, 13], Fitness=243, Coverage=14.29%, Precision=1.0, Recall=0.14814814814814814, Time=2.99 seconds
+ACO Algorithm: Positions=[13, 26, 6], Fitness=243, Coverage=14.29%, Precision=1.0, Recall=0.14814814814814814, Time=3.50 seconds
+K-means Clustering Algorithm: Positions=[21, 4, 11], Fitness=678, Coverage=50.00%, Precision=1.0, Recall=0.5185185185185185, Time=0.00 seconds
+CGMO Algorithm: Positions=[26, 28, 13], Fitness=183, Coverage=10.71%, Precision=1.0, Recall=0.1111111111111111, Time=0.01 seconds
+============================
+Jumlah Sensor : 4
+----------------------------
+Greedy Algorithm: Positions=[28, 26, 4, 6], Fitness=244, Coverage=14.29%, Precision=1.0, Recall=0.14814814814814814, Time=0.03 seconds
+PSO Algorithm: Positions=[1, 2, 3, 28], Fitness=350, Coverage=21.43%, Precision=0.8333333333333334, Recall=0.18518518518518517, Time=1.85 seconds
+SA Algorithm: Positions=[6, 17, 26, 28], Fitness=244, Coverage=14.29%, Precision=1.0, Recall=0.14814814814814814, Time=0.11 seconds
+Genetic Algorithm: Positions=[15, 22, 7, 27], Fitness=995, Coverage=64.29%, Precision=1.0, Recall=0.6666666666666666, Time=5.16 seconds
+Neural Network Algorithm: Positions=[26, 27, 10, 20], Fitness=594, Coverage=39.29%, Precision=1.0, Recall=0.4074074074074074, Time=2.07 seconds
+Decision Tree Algorithm: Positions=[26, 3, 4, 2], Fitness=304, Coverage=17.86%, Precision=1.0, Recall=0.18518518518518517, Time=2.23 seconds
+Random Forest Algorithm: Positions=[2, 1, 4, 26], Fitness=362, Coverage=21.43%, Precision=0.8333333333333334, Recall=0.18518518518518517, Time=5.52 seconds
+ACO Algorithm: Positions=[4, 6, 17, 26], Fitness=304, Coverage=17.86%, Precision=1.0, Recall=0.18518518518518517, Time=4.69 seconds
+K-means Clustering Algorithm: Positions=[23, 15, 4, 10], Fitness=563, Coverage=35.71%, Precision=1.0, Recall=0.37037037037037035, Time=0.00 seconds
+CGMO Algorithm: Positions=[26, 28, 13, 12], Fitness=244, Coverage=14.29%, Precision=1.0, Recall=0.14814814814814814, Time=0.01 seconds
+============================
+Jumlah Sensor : 5
+----------------------------
+Greedy Algorithm: Positions=[28, 26, 4, 6, 13], Fitness=305, Coverage=17.86%, Precision=1.0, Recall=0.18518518518518517, Time=0.03 seconds
+PSO Algorithm: Positions=[1, 4, 13, 26, 28], Fitness=357, Coverage=21.43%, Precision=0.8333333333333334, Recall=0.18518518518518517, Time=2.29 seconds
+SA Algorithm: Positions=[4, 10, 12, 13, 28], Fitness=365, Coverage=21.43%, Precision=1.0, Recall=0.2222222222222222, Time=0.14 seconds
+Genetic Algorithm: Positions=[22, 4, 7, 18, 11], Fitness=1242, Coverage=85.71%, Precision=1.0, Recall=0.8888888888888888, Time=6.39 seconds
+Neural Network Algorithm: Positions=[6, 7, 16, 5, 22], Fitness=1131, Coverage=75.00%, Precision=1.0, Recall=0.7777777777777778, Time=2.42 seconds
+Decision Tree Algorithm: Positions=[6, 1, 26, 4, 24], Fitness=473, Coverage=28.57%, Precision=0.875, Recall=0.25925925925925924, Time=2.84 seconds
+Random Forest Algorithm: Positions=[12, 13, 23, 6, 14], Fitness=425, Coverage=25.00%, Precision=1.0, Recall=0.25925925925925924, Time=6.89 seconds
+ACO Algorithm: Positions=[14, 6, 26, 13, 23], Fitness=365, Coverage=21.43%, Precision=1.0, Recall=0.2222222222222222, Time=5.53 seconds
+K-means Clustering Algorithm: Positions=[22, 7, 3, 14, 1], Fitness=880, Coverage=57.14%, Precision=0.9375, Recall=0.5555555555555556, Time=0.00 seconds
+CGMO Algorithm: Positions=[26, 28, 13, 12, 15], Fitness=348, Coverage=21.43%, Precision=1.0, Recall=0.2222222222222222, Time=0.01 seconds
+============================

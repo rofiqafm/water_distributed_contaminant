@@ -1,7 +1,7 @@
 =====================================
 |    Network JILIN:Algoritma Greedy    |
 =====================================
-Jumlah Sensor:2| Lokasi Sensor Terbaik pada Node:[28, 13]
+Jumlah Sensor:2| Lokasi Sensor Terbaik pada Node:[np.int64(28), np.int64(13)]
 -----------------------------------------------------
  Source  Frequency
      28         61
@@ -33,7 +33,7 @@ Jumlah Sensor:2| Lokasi Sensor Terbaik pada Node:[28, 13]
      19         31
      18         25
 -----------------------------------------------------
-Jumlah Sensor:2| Lokasi Sensor Terbaik pada Link:[6, 7]
+Jumlah Sensor:2| Lokasi Sensor Terbaik pada Link:[np.int64(6), np.int64(7)]
 -----------------------------------------------------
  Source  Frequency
       6         60
@@ -65,7 +65,7 @@ Jumlah Sensor:2| Lokasi Sensor Terbaik pada Link:[6, 7]
      22         35
      26         31
 -----------------------------------------------------
-Jumlah Sensor:3| Lokasi Sensor Terbaik pada Node:[28, 13, 26]
+Jumlah Sensor:3| Lokasi Sensor Terbaik pada Node:[np.int64(28), np.int64(13), np.int64(26)]
 -----------------------------------------------------
  Source  Frequency
      28         61
@@ -97,7 +97,7 @@ Jumlah Sensor:3| Lokasi Sensor Terbaik pada Node:[28, 13, 26]
      19         31
      18         25
 -----------------------------------------------------
-Jumlah Sensor:3| Lokasi Sensor Terbaik pada Link:[6, 7, 18]
+Jumlah Sensor:3| Lokasi Sensor Terbaik pada Link:[np.int64(6), np.int64(7), np.int64(18)]
 -----------------------------------------------------
  Source  Frequency
       6         60
@@ -129,7 +129,7 @@ Jumlah Sensor:3| Lokasi Sensor Terbaik pada Link:[6, 7, 18]
      22         35
      26         31
 -----------------------------------------------------
-Jumlah Sensor:4| Lokasi Sensor Terbaik pada Node:[28, 13, 26, 6]
+Jumlah Sensor:4| Lokasi Sensor Terbaik pada Node:[np.int64(28), np.int64(13), np.int64(26), np.int64(6)]
 -----------------------------------------------------
  Source  Frequency
      28         61
@@ -161,7 +161,7 @@ Jumlah Sensor:4| Lokasi Sensor Terbaik pada Node:[28, 13, 26, 6]
      19         31
      18         25
 -----------------------------------------------------
-Jumlah Sensor:4| Lokasi Sensor Terbaik pada Link:[6, 7, 18, 19]
+Jumlah Sensor:4| Lokasi Sensor Terbaik pada Link:[np.int64(6), np.int64(7), np.int64(18), np.int64(19)]
 -----------------------------------------------------
  Source  Frequency
       6         60
@@ -193,7 +193,7 @@ Jumlah Sensor:4| Lokasi Sensor Terbaik pada Link:[6, 7, 18, 19]
      22         35
      26         31
 -----------------------------------------------------
-Jumlah Sensor:5| Lokasi Sensor Terbaik pada Node:[28, 13, 26, 6, 23]
+Jumlah Sensor:5| Lokasi Sensor Terbaik pada Node:[np.int64(28), np.int64(13), np.int64(26), np.int64(6), np.int64(23)]
 -----------------------------------------------------
  Source  Frequency
      28         61
@@ -225,7 +225,7 @@ Jumlah Sensor:5| Lokasi Sensor Terbaik pada Node:[28, 13, 26, 6, 23]
      19         31
      18         25
 -----------------------------------------------------
-Jumlah Sensor:5| Lokasi Sensor Terbaik pada Link:[6, 7, 18, 19, 20]
+Jumlah Sensor:5| Lokasi Sensor Terbaik pada Link:[np.int64(6), np.int64(7), np.int64(18), np.int64(19), np.int64(20)]
 -----------------------------------------------------
  Source  Frequency
       6         60

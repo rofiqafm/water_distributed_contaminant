@@ -8,9 +8,10 @@ from PIL import Image
 # G = epanet('networks/Jilin including water quality.inp') #local
 # G = epanet('source_inp/network/Jilin including water quality.inp') #Colab
 # G = epanet('source_inp/FOS.inp') #Colab
-G = epanet('source_inp/data_network/FOS - unvertices.inp')
+# G = epanet('source_inp/data_network/FOS - unvertices.inp')
+G = epanet(f'source_inp/data_network/BWSN-clean.inp')
 # G = epanet('source_inp/data_network/Jilin including water quality.inp')
-name_network="fos"
+name_network="bwsn"
 G.plot_close()
 #=========================================================
 def QualityContaminant(ql,qt,s):
@@ -91,7 +92,7 @@ for ik,vk in enumerate(G.getNodeIndex()):
     LL[vk]=L
 #=========================================================
 nodeContaminantTimer=None
-nodeSource=37
+nodeSource=129
 nodeTarget=7
 linkContaminantTimer=None
 linkTarget=None #None or linkID
