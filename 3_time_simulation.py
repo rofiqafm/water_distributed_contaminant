@@ -8,10 +8,11 @@ from PIL import Image
 # G = epanet('networks/Jilin including water quality.inp') #local
 # G = epanet('source_inp/network/Jilin including water quality.inp') #Colab
 # G = epanet('source_inp/FOS.inp') #Colab
-# G = epanet('source_inp/data_network/FOS - unvertices.inp')
-G = epanet(f'source_inp/data_network/BWSN-clean.inp')
+G = epanet('source_inp/data_network/FOS - unvertices.inp')
+# G = epanet(f'source_inp/data_network/BWSN-clean.inp')
 # G = epanet('source_inp/data_network/Jilin including water quality.inp')
-name_network="bwsn"
+# name_network="bwsn"
+name_network="fos"
 G.plot_close()
 #=========================================================
 def QualityContaminant(ql,qt,s):

@@ -8,12 +8,12 @@ import networkx as nx
 
 #load File INP
 # G = epanet('source_inp/FOS.inp')
-# G = epanet('source_inp/data_network/FOS - unvertices.inp')
-G = epanet('source_inp/data_network/Jilin including water quality.inp')
+G = epanet('source_inp/data_network/FOS - unvertices.inp')
+# G = epanet('source_inp/data_network/Jilin including water quality.inp')
 # G = epanet('source_inp/network/New York Tunnels including water quality.inp')
 # G.loadMSXFile('source_inp/net2-cl2.msx')
 
-name_network="jilin"
+name_network="fos"
 #Menutup semua Plot Network yang terbuka
 G.plot_close()
 
@@ -29,7 +29,7 @@ def convert_seconds(seconds):
 
 G.setQualityType('chem', 'Chlorine', 'mg/L')
 #setting lama durasi simulasi
-simulationDuration = 18000    #Duration-> 172800 seconds = 2days | default => 086400 = 1 days
+simulationDuration = 360    #Duration-> 172800 seconds = 2days | default => 086400 = 1 days
 G.setTimeSimulationDuration(simulationDuration)
 patternStart = 0 # Pattern Start
 G.setTimePatternStart(patternStart)
@@ -123,11 +123,13 @@ for kln,vln in enumerate(listNode):
           #generate Image Berdasarkan kontaminasi
           # menampilkan gradient + nilai kontaminasi
           G.plot(
+              linksID=True,
+              nodesID=True,
               # nodesindex=G.getNodeIndex(),
               # nodesID=G.getNodeIndex(),
               # nodesindex=G.getNodeIndex(),
-              node_values=QN,
-              link_values=QL,
+            #   node_values=QN,
+            #   link_values=QL,
               # nodesID=True,
               fig_size=[3,3],
               fontsize=3,
@@ -136,8 +138,8 @@ for kln,vln in enumerate(listNode):
               figure=False,
               title=f'Persebaran Source Contaminant Node:{vln} Waktu Ke : {namelabel}',
               # colors='coolwarm',
-              node_text=True,
-              link_text=True,
+            #   node_text=True,
+            #   link_text=True,
               # colorbar='coolwarm',
               min_colorbar=0,
               max_colorbar=2,
@@ -151,22 +153,29 @@ for kln,vln in enumerate(listNode):
             cord=G.getNodeCoordinates(value)
             pos=(cord['x'][value],cord['y'][value])
             netwx.add_node(f'{value}', pos=pos)
-
+        
           for keyLink,valueLink in enumerate(G.getLinkIndex()):
             # flow=G.getLinkFlows(valueLink)
             flow=Vl[keyLink]
             link=G.getNodesConnectingLinksID(valueLink)[0]
             if flow > 0:
-                netwx.add_edge(link[0], link[1], flow=flow)
+                netwx.add_edge(link[0], link[1], flow=flow,name=valueLink)
             else:
-                netwx.add_edge(link[1], link[0], flow=flow)
+                netwx.add_edge(link[1], link[0], flow=flow,name=valueLink)
 
           nodepos=nx.get_node_attributes(netwx, 'pos')
           nSize=15
           fSize=4
           plt.figure(figsize=(3, 3))
+        #   edge_labels = nx.get_edge_attributes(netwx, 'name')
+        #   el = {str(index): index for index, value in enumerate(edge_labels, start=1)}
+        #   asas=nx.spring_layout(netwx)
+        #   print(edge_labels)
+        # #   print(asas)
+        #   exit()
           nx.draw_networkx_nodes(netwx, nodepos, node_size=nSize, node_color='lightblue')
           nx.draw_networkx_edges(netwx, nodepos, edgelist=netwx.edges,node_size=nSize,arrowstyle='-|>',arrowsize=4, edge_color='blue')
+        #   nx.draw_networkx_labels(netwx, nx.spring_layout(netwx), labels=el, font_size=fSize, font_color='k')
           nx.draw_networkx_labels(netwx, nodepos, font_size=fSize, font_color='k')
           plt.title(f'Arah Arus air \npada Waktu Ke : {namelabel}',fontsize=4)
           plt.box(None)

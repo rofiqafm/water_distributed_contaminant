@@ -3,6 +3,15 @@ import ast
 import csv
 import numpy as np
 import networkx as nx
+from epyt import epanet
+
+def recompute_eigenvector_centrality(N,max_iter=500):
+    netwx = nx.DiGraph()
+    for keyLink,valueLink in enumerate(N.getLinkIndex()):
+        link=N.getNodesConnectingLinksID(valueLink)[0]
+        netwx.add_edge(link[0], link[1])
+    centrality = nx.eigenvector_centrality(netwx, max_iter=max_iter)
+    return centrality
 
 def compute_eigenvector_centrality(data,max_iter=500):
     """
@@ -124,39 +133,46 @@ def calculate_coverage(sensor_positions, step_data,steps):
 directory='source_inp/output_simulation'
 pathcsv=f'{directory}/time_contamination'
 networkset=['fos','bwsn']
-
+listNetwork=['FOS - unvertices.inp','BWSN-clean.inp']
 for i,ns in enumerate(networkset):
+    N= epanet(f'source_inp/data_network/{listNetwork[i]}')
+    N.plot_close()
     csvfile = open(f"{directory}/{ns}_8.1_report.csv", "w",newline='')
     writertank = csv.writer(csvfile, dialect='excel',delimiter=";")
     header=['Contaminant(Node)',
             # 'EigenVector',
+            'Sensor2(Link)_greedyonly',
             'Sensor2(Link)',
-            'Sensor2(Link)_ori',
             'Frequency2',
             'score(Frequency*EigenVector)2',
             'Coverage2',
+            'Sensor3(Link)__greedyonly',
             'Sensor3(Link)',
-            'Sensor3(Link)_ori',
             'Frequency3',
             'score(Frequency*EigenVector)3',
             'Coverage3',
+            'Sensor4(Link)__greedyonly',
             'Sensor4(Link)',
-            'Sensor4(Link)_ori',
             'Frequency4',
             'score(Frequency*EigenVector)4',
             'Coverage4',
+            'Sensor5(Link)__greedyonly',
             'Sensor5(Link)',
-            'Sensor5(Link)_ori',
             'Frequency5',
             'score(Frequency*EigenVector)5',
             'Coverage5']
     readLink = pd.read_csv(f'{pathcsv}/{ns}_link.csv',on_bad_lines='skip',delimiter=';')
-    nodeSource=[i for i in range(1,len(readLink['NodeID'])+1)]
+    # nodeSource=[i for i in range(1,len(readLink['NodeID'])+1)]
+    nodeSource=[i for i in N.getLinkIndex()]
+
     writertank.writerow(header)
 
     steps = [col for col in readLink.columns if col.startswith('links_step')]
     step_data = {col: np.array([x if pd.isna(x)!=True else 0 for x in readLink[col]]) for col in steps}
-
+    
+    centrality = recompute_eigenvector_centrality(N, max_iter=2000)
+    # print(centralitya)
+    # exit()
     for id,label in enumerate(range(1,len(readLink['NodeID'])+1)):
         dataResultLink={'Source':[]}
         dataCopyLink=readLink.loc[[label-1]].copy()
@@ -176,9 +192,8 @@ for i,ns in enumerate(networkset):
                         dataResultLink[keys].append(val)
         resultLink=pd.DataFrame(dataResultLink)
         # Hitung eigenvector centrality dengan iterasi maksimum lebih tinggi
-        centrality = compute_eigenvector_centrality(resultLink, max_iter=1000)
-        # print(centrality.keys())
-        # exit()
+        # centrality = compute_eigenvector_centrality(resultLink, max_iter=1000)
+
         num_sensors = [2,3,4,5]
         sensor_list=[]
         # sensor_list=[centrality.get(str(label),0)]
@@ -186,8 +201,8 @@ for i,ns in enumerate(networkset):
             sensor_locationsLink = greedy_sensor_placement(resultLink, sensor,centrality)
             sensor_locationsLinkOriginal = greedy_sensor_placement_original(resultLink, sensor)
             coverage = calculate_coverage(sensor_locationsLink['sensor_locations'],step_data,steps)
-            sensor_list.append(sensor_locationsLink['sensor_locations'])
             sensor_list.append(sensor_locationsLinkOriginal['sensor_locations'])
+            sensor_list.append(sensor_locationsLink['sensor_locations'])
             sensor_list.append(sensor_locationsLink['frequency_locations'])
             sensor_list.append(sensor_locationsLink['score_locations'])
             sensor_list.append(coverage)
