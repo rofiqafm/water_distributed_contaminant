@@ -16,15 +16,17 @@ name_network="fos"
 G.plot_close()
 #=========================================================
 def QualityContaminant(ql,qt,s):
-    result=[]
+    result,resultval=[],[]
     for ik,vk in enumerate(ql):
-        res=[]
+        res,resval=[],[]
         for qlkey,qlval in enumerate(vk):
             if(round(qlval,2)>qt):
                 res.append(qlkey+1)
+                resval.append(float(qlval))
         if(len(res)):
             result.append(res)
-    return result
+            resultval.append(resval)
+    return result,resultval
 
 def calcTContaminant(qcl,nTarget):
     result=None
@@ -40,7 +42,7 @@ simulationDuration = 18000    #Duration-> 172800 seconds = 2days | default => 86
 G.setTimeSimulationDuration(simulationDuration)
 patternStart = 0 # Pattern Start
 G.setTimePatternStart(patternStart)
-patternStep = 5 # Pattern Timestep
+patternStep = 1 # Pattern Timestep
 G.setTimePatternStep(patternStep)
 G.setTimeReportingStart(patternStart)
 G.setTimeReportingStep(patternStep)
@@ -53,8 +55,9 @@ if not os.path.exists(directory):
 #=========================================================
 kmax=0 # batas aman kontaminant
 plotReport=1 #ouput plot setiap :h jam
-plotStepTimer=plotReport*60*patternStep
-plotTimer=1*60*patternStep
+second=60
+plotStepTimer=plotReport*second*patternStep#detik,menit,jam
+plotTimer=1*second*patternStep
 #=========================================================
 NL,LL={},{}
 for ik,vk in enumerate(G.getNodeIndex()):
@@ -100,29 +103,46 @@ linkTarget=None #None or linkID
 fextra='' #"_15 kosong"
 #=========================================================
 with open(f'{directory}/{name_network}_node{fextra}.csv', 'w',newline='') as csvfile:
+    csvfileQuality = open(f"{directory}/{name_network}_node_quality{fextra}.csv", "w",newline='')
+    writertankQuality = csv.writer(csvfileQuality, dialect='excel',delimiter=";")
+
     writertank = csv.writer(csvfile, dialect='excel',delimiter=";")
     header=['NodeID']+[f'node_step{i*patternStep}' for i in range(len(NL[1]))]
     writertank.writerow(header)
+    writertankQuality.writerow(header)
     fcNode=True
     for it,itv in enumerate(G.getNodeIndex()):
-        qcNode=QualityContaminant(NL[itv],kmax,itv)
-        if itv==nodeSource and fcNode==True and nodeTarget!=None:
-            nodeContaminantTimer=calcTContaminant(qcNode,nodeTarget)
-            fcNode=False
+        qcNode,qqNode=QualityContaminant(NL[itv],kmax,itv)
+        # if itv==nodeSource and fcNode==True and nodeTarget!=None:
+        #     nodeContaminantTimer=calcTContaminant(qcNode,nodeTarget)
+        #     fcNode=False
         rowdata=[itv] + qcNode
+        rowdataQuality=[itv] +qqNode
         writertank.writerow(rowdata)
+        writertankQuality.writerow(rowdataQuality)
+    csvfileQuality.close()
+
 with open(f'{directory}/{name_network}_link{fextra}.csv', 'w',newline='') as csvfile:
+    csvfileQuality = open(f"{directory}/{name_network}_link_quality{fextra}.csv", "w",newline='')
+    writertankQuality = csv.writer(csvfileQuality, dialect='excel',delimiter=";")
+
     writertank = csv.writer(csvfile, dialect='excel',delimiter=";")
     header=['NodeID']+[f'links_step{i}' for i in range(len(LL[1]))]
     writertank.writerow(header)
+    writertankQuality.writerow(header)
     fcLink=True
     for il,ilv in enumerate(G.getNodeIndex()):
-        qcLink=QualityContaminant(LL[ilv],kmax,ilv)
-        if ilv==nodeSource and fcLink==True and linkTarget!=None:
-            linkContaminantTimer=calcTContaminant(qcLink,linkTarget)
-            fcLink=False
+        qcLink,qqLink=QualityContaminant(LL[ilv],kmax,ilv)
+        # if ilv==nodeSource and fcLink==True and linkTarget!=None:
+        #     linkContaminantTimer=calcTContaminant(qcLink,linkTarget)
+        #     fcLink=False
         rowdata=[ilv] +qcLink
+        rowdataQuality=[ilv] +qqLink
         writertank.writerow(rowdata)
+        writertankQuality.writerow(rowdataQuality)
+    csvfileQuality.close()
+
+exit()
 
 statisticsType = 'NONE'
 G.setTimeStatisticsType(statisticsType)

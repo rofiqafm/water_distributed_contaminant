@@ -7,7 +7,7 @@ import csv
 
 np.seterr(divide='ignore', invalid='ignore')
 
-def readDataFrame(readLink,label,nodeSource):
+def readDataFrame(readLink,label,nodeSource,valDefault=0):
 # =====================================
     #DataFrame untuk Frequency greedy original
     dataResultLink={'Source':[]}
@@ -20,7 +20,7 @@ def readDataFrame(readLink,label,nodeSource):
                 if keys!='NodeID' :
                     if keys not in dataResultLink:
                         dataResultLink[keys]=[]
-                    val=0
+                    val=valDefault
                     if pd.isna(row[keys])!=True:
                         res=ast.literal_eval(row[keys])
                         if node in res:
@@ -126,26 +126,57 @@ def local_optimization(graph, initial_placement, combined_centrality,label):
 def evaluate_placement(graph, placement, combined_centrality):
     return sum(combined_centrality[int(node)] for node in placement)
 
+def timeEstimated(steps,readLink,sensor_location,label):
+    # steps=steps[1:]
+    readLink=readLink.loc[readLink['Source'].isin(sensor_location)]
+    tr={}
+    for index,item in readLink.iterrows():
+        stepPos=item.loc[steps]
+        if (stepPos == 1).any():
+            first_position_index = stepPos[stepPos == 1].index[0]
+            first_position_index_numeric = stepPos.index.get_loc(first_position_index)
+        else:
+            first_position_index_numeric=None
+        tr[item['Source']]=first_position_index_numeric
+    reposition=[tr[k] for k in sensor_location]
+    # reposition=[]
+    # first=True
+    # for k in sensor_location:
+    #     val=tr[k]
+    #     if val==0 and first!=True:
+    #         val=None
+    #     reposition.append(val)
+    #     first=False
+    return reposition
+
 directory='source_inp/output_simulation'
 pathcsv=f'{directory}/time_contamination'
 networkset=['fos']#,'bwsn'
 listNetwork=['FOS - unvertices.inp']#,'BWSN-clean.inp'
-num_sensors = [2] #,3,4,5
+num_sensors = [2,3,4,5] #,
 
 for i,ns in enumerate(networkset):
     N= epanet(f'source_inp/data_network/{listNetwork[i]}')
     N.plot_close()
-    csvfile = open(f"{directory}/{ns}_9.0_ev_between_heurastic.csv", "w",newline='')
+    csvfile = open(f"{directory}/{ns}_9.0_greedy.csv", "w",newline='')
+    csvfileevbw = open(f"{directory}/{ns}_9.0_greedy_ev_bw.csv", "w",newline='')
+    csvfileevbwh = open(f"{directory}/{ns}_9.0_greedy_ev_bw_heurastic.csv", "w",newline='')
     writertank = csv.writer(csvfile, dialect='excel',delimiter=";")
+    writertankevbw = csv.writer(csvfileevbw, dialect='excel',delimiter=";")
+    writertankevbwh = csv.writer(csvfileevbwh, dialect='excel',delimiter=";")
 
     readLink = pd.read_csv(f'{pathcsv}/{ns}_link.csv',on_bad_lines='skip',delimiter=';')
+    
     nodeSource=[i for i in N.getLinkIndex()]
     steps = [col for col in readLink.columns if col.startswith('links_step')]
     step_data = {col: np.array([x if pd.isna(x)!=True else 0 for x in readLink[col]]) for col in steps}
-    head=['Node Contaminant','Jumlah Sensor','Algorithm','Sensor Placement','Score']
+    head=['Node Contaminant','Jumlah Sensor','Algorithm','Sensor Placement','Score','Time estimated']
     writertank.writerow(head)
+    writertankevbw.writerow(head)
+    writertankevbwh.writerow(head)
     for id,label in enumerate(range(1,len(readLink['NodeID'])+1)):
         resultLink=readDataFrame(readLink,label,nodeSource)
+        resultLinkO=readDataFrame(readLink,label,nodeSource,valDefault=None)
         netwz=nx.Graph()
         combine_centrality=combine_centrality_compute(netwz,step_data,label,normal=True)
         candidate_nodes = heuristic_preprocessing(netwz, combine_centrality,label, threshold=0.7)
@@ -155,8 +186,12 @@ for i,ns in enumerate(networkset):
             
             initial_placement,initial_score = greedy_sensor_placement(netwz.subgraph(candidate_nodes), combine_centrality, sensor)
             final_placement = local_optimization(netwz, initial_placement, combine_centrality,label)
-            
-            writertank.writerow([label]+[sensor]+['Greedy']+[sp_ori]+[score_ori])
-            writertank.writerow([label]+[sensor]+['Greedy+ev+bw']+[sensor_placement]+[score])
-            writertank.writerow([label]+[sensor]+['Heurastic:Greedy+ev+bw']+[final_placement]+[initial_score])
+            time_ori=timeEstimated(steps,resultLinkO,sp_ori,label)
+            time_gevbw=timeEstimated(steps,resultLinkO,sensor_placement,label)
+            time_hegevbw=timeEstimated(steps,resultLinkO,final_placement,label)
+            writertank.writerow([label]+[sensor]+['Greedy']+[sp_ori]+[score_ori]+[time_ori])
+            writertankevbw.writerow([label]+[sensor]+['Greedy+ev+bw']+[sensor_placement]+[score]+[time_gevbw])
+            writertankevbwh.writerow([label]+[sensor]+['Heurastic:Greedy+ev+bw']+[final_placement]+[initial_score]+[time_hegevbw])
     csvfile.close()
+    csvfileevbw.close()
+    csvfileevbwh.close()
